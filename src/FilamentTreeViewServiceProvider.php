@@ -7,6 +7,7 @@ use Filament\Support\Assets\Js;
 use Filament\Support\Facades\FilamentAsset;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class FilamentTreeViewServiceProvider extends PackageServiceProvider
 {
@@ -28,5 +29,9 @@ class FilamentTreeViewServiceProvider extends PackageServiceProvider
             Css::make('filament-tree-view-styles', __DIR__.'/../resources/dist/filament-tree-view.css'),
             Js::make('filament-tree-view-scripts', __DIR__.'/../resources/dist/filament-tree-view.js'),
         ], package: 'openplain/filament-tree-view');
+
+        // Explicitly include the component view to prevent caching issues
+        // with the '::' alias during optimization.
+        Blade::include('filament-tree-view::tree-node');
     }
 }
